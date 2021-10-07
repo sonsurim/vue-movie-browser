@@ -2,7 +2,7 @@
   <div
     :data-id="movieItem.imdbID"
     class="movie-list__item"
-    @click="test">
+    @click="showDetail">
     <div
       class="item-img"
       :style="`background-image: url(${movieItem.Poster}) `"
@@ -25,8 +25,8 @@ export default {
     }
   },
   methods: {
-    test () {
-      console.log(this.movieItem)
+    showDetail () {
+      this.$router.push(`/movie/${this.movieItem.imdbID}`)
     }
   }
 }
@@ -34,7 +34,8 @@ export default {
 
 <style lang="scss" scoped>
 .movie-list__item {
-  width: 300px;
+  width: 235px;
+  padding: 20px 10px;
 }
 .item {
   &-title {
@@ -43,7 +44,7 @@ export default {
   }
   &-img {
     width: 100%;
-    height: 350px;
+    height: 300px;
     background-position: center top;
     background-repeat: no-repeat;
     background-size: contain;

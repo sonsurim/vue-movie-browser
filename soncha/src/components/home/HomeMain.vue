@@ -1,11 +1,13 @@
 <template>
   <div class="main__movie-list">
     <CommonTitle />
-    <div class="main__movie-item-wrapper">
+    <div class="main__movie-items">
       <ContentMovieItem
         v-for="movieItem in movieList"
         :key="`item-${movieItem.imdbItem}`"
         :movie-item="movieItem" />
+    </div>
+    <div class="main__movie-pagination">
     </div>
   </div>
 </template>
@@ -25,13 +27,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(['movieList'])
+    ...mapState(['movieList', 'totalLength'])
   },
   created () {
-    this.fetchMovieList()
+    this.init()
   },
   methods: {
-    ...mapActions(['fetchMovieList'])
+    ...mapActions(['fetchMovieList']),
+    async init () {
+      await this.fetchMovieList()
+      console.log(this.movieList, this.totalLength)
+    }
   }
 
 }
@@ -43,9 +49,13 @@ export default {
   flex-direction: column;
   padding: 0 30px;
 }
-.main__movie-item-wrapper {
+.main__movie-items {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  text-align: center;
+}
+.movie-pagination {
+  padding: 0 10px;
 }
 </style>

@@ -4,6 +4,7 @@ import { getMovieList } from '@/api/movie'
 export default createStore({
   state: {
     movieList: [],
+    totalLength: 0,
     searchParams: {
       id: '',
       page: '',
@@ -15,6 +16,9 @@ export default createStore({
     SET_MOVIELIST (state, movieList) {
       state.movieList = movieList
     },
+    SET_TOTALLENGTH (state, total) {
+      state.totalLength = Number(total)
+    },
     SET_SEARCHPARAMS (state, params) {
       for (const key in params) {
         state.searchParams[key] = params[key]
@@ -24,16 +28,15 @@ export default createStore({
   actions: {
     async fetchMovieList ({ commit }, payload = {}) {
       const { keyword = 'lion', page = 1 } = payload
-      const { data } = await getMovieList(keyword, page)
+      const res = await getMovieList(keyword, page)
 
-      if (!data) {
+      if (!res.data) {
         return
       }
 
-      commit('SET_MOVIELIST', data.Search)
+      commit('SET_MOVIELIST', res.data)
+      commit('SET_TOTALLENGTH', res.total)
       commit('SET_SEARCHPARAMS', { keyword: keyword || 'lion', page: page || 1 })
     }
-  },
-  modules: {
   }
 })

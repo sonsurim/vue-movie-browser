@@ -3,6 +3,7 @@ import { getMovieList } from '@/api/movie'
 
 export default createStore({
   state: {
+    currentMovie: '',
     movieList: [],
     totalLength: 0,
     searchParams: {
@@ -13,6 +14,9 @@ export default createStore({
     }
   },
   mutations: {
+    SET_CURRENTMOVIE (state, movie) {
+      state.currentMovie = movie
+    },
     SET_MOVIELIST (state, movieList) {
       state.movieList = movieList
     },

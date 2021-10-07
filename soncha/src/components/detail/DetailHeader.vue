@@ -1,10 +1,16 @@
 <template>
-  <div>Detail header</div>
+  <header>
+    <CommonArrow />
+  </header>
 </template>
 
 <script>
-export default {
+import CommonArrow from '@/components/common/CommonArrow'
 
+export default {
+  components: {
+    CommonArrow
+  }
 }
 </script>
 

@@ -10,6 +10,7 @@
       </div>
     </div>
     <!-- <div class="main__movie-pagination">
+      more
     </div> -->
   </div>
 </template>
@@ -37,6 +38,7 @@ export default {
 
       const keyword = this.$route.query.search
       const page = this.$route.query.page
+      console.log(this.$route, keyword, page)
       await this.fetchMovieList({ keyword, page })
     }
   },
@@ -53,10 +55,6 @@ export default {
 
       this.$router.replace(`?search=${keyword}&page=${page}`)
       await this.fetchMovieList({ keyword, page })
-
-      if (!this.movieList.length) {
-        this.$router.replace('/404')
-      }
     },
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)

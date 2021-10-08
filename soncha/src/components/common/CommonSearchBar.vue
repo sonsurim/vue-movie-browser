@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="searchbar__wrapper">
     <input
       v-model.trim="searchKeyword"
       type="text"
@@ -25,33 +25,41 @@ export default {
     async searchMovie () {
       const keyword = this.searchKeyword
 
+      if (this.$route.name === 'NotFound') {
+        this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+        return
+      }
+
       this.$router.push(`?search=${keyword}&page=1`)
-      this.searchKeyword = ''
     }
   }
 
 }
 </script>
 
-<style>
-.searchbar__input {
-  position: relative;
-  width: 950px;
-  padding: 15px 0 15px 35px;
-  border: 1px solid #FFFFFF;
-  border-radius: 80px;
-  background: transparent;
-  color: #FFFFFF;
-  outline: none;
-  font-size: 18px;
-}
-.searchbar__icon {
-  position: absolute;
-  top: 76px;
-  right: 125px;
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
+<style lang="scss" scoped>
+.searchbar {
+  &__wrapper {
+    position: relative;
+  }
+  &__input {
+    width: 950px;
+    padding: 15px 0 15px 35px;
+    border: 1px solid #FFFFFF;
+    border-radius: 80px;
+    background: transparent;
+    color: #FFFFFF;
+    outline: none;
+    font-size: 18px;
+  }
+  &__icon {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+  }
 }
 
 </style>

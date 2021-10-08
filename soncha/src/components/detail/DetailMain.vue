@@ -123,7 +123,7 @@ export default {
 main {
   display: flex;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 30px;
   font-size: 18px;
 }
 .main {

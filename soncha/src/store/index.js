@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import { getMovieList, getMovieDetail } from '@/api/movie'
+import router from '@/routes'
 
 export default createStore({
   state: {
@@ -35,6 +36,7 @@ export default createStore({
       const res = await getMovieList(keyword, page)
 
       if (!res.data) {
+        router.replace('/404')
         return
       }
 

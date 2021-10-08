@@ -1,5 +1,5 @@
 <template>
-  <h2 class="header__logo">
+  <h2>
     SONCHA
   </h2>
 </template>
@@ -13,6 +13,7 @@ export default {
 <style lang="scss" scoped>
 .header__logo {
   font-size: 35px;
+  font-weight: bold;
   color: #FF3838;
 }
 

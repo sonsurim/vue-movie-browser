@@ -152,11 +152,11 @@ main {
   &__badge-wrapper {
     display: flex;
     justify-content: flex-end;
-    margin-top: 20px;
+    margin-top: 40px;
   }
   &__title {
     width: 560px;
-    margin-top:110px;
+    margin-top:90px;
     font-size: 80px;
     font-weight: bold;
     word-break: break-word;

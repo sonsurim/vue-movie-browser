@@ -1,6 +1,5 @@
 <template>
   <div class="main__movie-list">
-    <CommonTitle />
     <div class="main__movie-items-wrapper">
       <div class="main__movie-items">
         <ContentMovieItem
@@ -17,12 +16,10 @@
 
 <script>
 import ContentMovieItem from '@/components/content/ContentMovieItem'
-import CommonTitle from '@/components/common/CommonTitle'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   components: {
-    CommonTitle,
     ContentMovieItem
   },
   data () {
@@ -77,7 +74,7 @@ export default {
 }
 .main__movie-items {
   display: grid;
-  grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  grid-template: repeat(2, 1fr) / repeat(6, 1fr);
   grid-gap: 20px;
   grid-auto-flow: row dense;
   justify-content: center;

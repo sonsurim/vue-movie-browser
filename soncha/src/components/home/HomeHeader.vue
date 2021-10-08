@@ -1,7 +1,7 @@
 <template>
   <header class="header">
-    <CommonLogo />
-    <CommonSearchBar />
+    <CommonLogo class="header__logo" />
+    <CommonSearchBar class="header__searchbar" />
   </header>
 </template>
 
@@ -17,6 +17,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 100px 70px 100px;
+}
+.header {
+  &__logo{
+    margin-top: 7px;
+  }
+}
 
 </style>

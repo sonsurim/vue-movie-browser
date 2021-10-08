@@ -1,5 +1,5 @@
 <template>
-  <div class="header__searchbar">
+  <div>
     <input
       v-model.trim="searchKeyword"
       type="text"
@@ -34,11 +34,20 @@ export default {
 
 <style>
 .searchbar__input {
+  position: relative;
+  width: 950px;
+  padding: 15px 0 15px 35px;
   border: 1px solid #FFFFFF;
-  color: #FFFFFF;
+  border-radius: 80px;
   background: transparent;
+  color: #FFFFFF;
+  outline: none;
+  font-size: 18px;
 }
 .searchbar__icon {
+  position: absolute;
+  top: 76px;
+  right: 125px;
   width: 20px;
   height: 20px;
 }

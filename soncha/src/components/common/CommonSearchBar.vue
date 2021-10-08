@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-
 export default {
   data () {
     return {
@@ -23,11 +21,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchMovieList']),
     async searchMovie () {
-      const res = await this.fetchMovieList({ keyword: this.searchKeyword })
-      console.log(res)
-      console.log(this.searchKeyword)
+      const keyword = this.searchKeyword
+
+      this.$router.push(`?search=${keyword}&page=1`)
+      this.searchKeyword = ''
     }
   }
 

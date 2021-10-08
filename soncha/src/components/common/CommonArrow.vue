@@ -12,7 +12,7 @@
 export default {
   methods: {
     test () {
-      this.$router.push('/')
+      this.$router.go(-1)
     }
   }
 }

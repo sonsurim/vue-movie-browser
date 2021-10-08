@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-
 export default {
   props: {
     movieItem: {
@@ -26,12 +24,9 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['SET_CURRENTMOVIE']),
     showDetail () {
       const movieId = this.movieItem.imdbID
-
-      this.SET_CURRENTMOVIE(movieId)
-      this.$router.push(`/movie/${movieId}`)
+      this.$emit('showDetail', movieId)
     }
   }
 }

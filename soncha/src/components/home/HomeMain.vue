@@ -5,8 +5,9 @@
       <div class="main__movie-items">
         <ContentMovieItem
           v-for="movieItem in movieList"
-          :key="`item-${movieItem.imdbItem}`"
-          :movie-item="movieItem" />
+          :key="`item_${movieItem.imdbID}`"
+          :movie-item="movieItem"
+          @showDetail="showDetail" />
       </div>
     </div>
     <!-- <div class="main__movie-pagination">
@@ -17,7 +18,7 @@
 <script>
 import ContentMovieItem from '@/components/content/ContentMovieItem'
 import CommonTitle from '@/components/common/CommonTitle'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -29,19 +30,42 @@ export default {
     }
   },
   computed: {
-    ...mapState(['movieList', 'totalLength'])
+    ...mapState(['movieList', 'totalLength', 'searchParams'])
+  },
+  watch: {
+    async $route () {
+      if (this.$route.name === 'Detail') {
+        return
+      }
+
+      const keyword = this.$route.query.search
+      const page = this.$route.query.page
+      await this.fetchMovieList({ keyword, page })
+    }
   },
   created () {
     this.init()
   },
   methods: {
+    ...mapMutations(['SET_CURRENTMOVIE']),
     ...mapActions(['fetchMovieList']),
     async init () {
-      await this.fetchMovieList()
-      console.log(this.movieList, this.totalLength)
+      const isNotInit = !!Object.keys(this.$route.query).length
+      const keyword = isNotInit ? this.$route.query.search : this.searchParams.keyword
+      const page = isNotInit ? this.$route.query.page : this.searchParams.page
+
+      this.$router.replace(`?search=${keyword}&page=${page}`)
+      await this.fetchMovieList({ keyword, page })
+
+      if (!this.movieList.length) {
+        this.$router.replace('/404')
+      }
+    },
+    showDetail (movieId) {
+      this.SET_CURRENTMOVIE(movieId)
+      this.$router.push(`/movie/${movieId}`)
     }
   }
-
 }
 </script>
 

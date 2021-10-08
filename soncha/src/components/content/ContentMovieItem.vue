@@ -42,11 +42,15 @@ export default {
   width: 200px;
   min-width: 200px;
   padding: 20px 10px;
+  cursor: pointer;
 }
 .item {
   &-title {
     margin: 0;
     margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0 10px;
   }
   &-img {
     width: 100%;

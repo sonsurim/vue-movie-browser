@@ -9,9 +9,8 @@
           :movie-item="movieItem" />
       </div>
     </div>
-
-    <div class="main__movie-pagination">
-    </div>
+    <!-- <div class="main__movie-pagination">
+    </div> -->
   </div>
 </template>
 
@@ -54,7 +53,8 @@ export default {
 }
 .main__movie-items {
   display: grid;
-  grid-template: repeat(5, 1fr) / repeat(5, 1fr);
+  grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+  grid-gap: 20px;
   grid-auto-flow: row dense;
   justify-content: center;
 }

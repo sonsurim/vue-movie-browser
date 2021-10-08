@@ -4,6 +4,12 @@
       <div class="main__row">
         <div class="main__movie-content">
           <div class="content__badge-wrapper">
+            <CommonBadge
+              v-for="info in badgeInfo"
+              :key="`badge-${info.icon}`"
+              :info="info">
+              {{ info }}
+            </CommonBadge>
           </div>
           <h1
             class="content__title"
@@ -36,7 +42,7 @@
             <h2>Introduction</h2>
           </div>
           <div class="info__content">
-            {{ info }}
+            {{ plot }}
           </div>
         </div>
       </div>
@@ -46,14 +52,32 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import CommonBadge from '@/components/common/CommonBadge'
 
 export default {
+  components: {
+    CommonBadge
+  },
   data () {
     return {
       title: '',
       poster: '',
       director: '',
-      info: '',
+      plot: '',
+      badgeInfo: {
+        runtime: {
+          icon: '',
+          text: ''
+        },
+        released: {
+          icon: '',
+          text: ''
+        },
+        score: {
+          icon: '',
+          text: ''
+        }
+      },
       genreList: []
     }
   },
@@ -62,11 +86,7 @@ export default {
   },
   watch: {
     currentMovie () {
-      this.title = this.currentMovie.Title || ''
-      this.poster = this.currentMovie.Poster || ''
-      this.director = this.currentMovie.Director || ''
-      this.info = this.currentMovie.Plot || ''
-      this.genreList = this.currentMovie.Genre.split(',').splice(2) || []
+      this.setData()
     }
   },
   created () {
@@ -76,7 +96,24 @@ export default {
     ...mapActions(['fetchMovieDetail']),
     async init () {
       const id = this.$route.params.id
-      this.fetchMovieDetail(id)
+      await this.fetchMovieDetail(id)
+    },
+    setData () {
+      const { Title, Poster, Director, Plot, Genre, Runtime, Released, imdbRating } = this.currentMovie
+      const runtime = Runtime.split(' ')[0]
+
+      this.title = Title || ''
+      this.poster = Poster.replace('SX300', 'SX800') || ''
+      this.director = Director || ''
+      this.plot = Plot || ''
+      this.genreList = Genre.split(',').splice(2) || []
+
+      this.badgeInfo.runtime.icon = 'clock'
+      this.badgeInfo.released.icon = 'calendar'
+      this.badgeInfo.score.icon = 'star'
+      this.badgeInfo.runtime.text = `${Math.floor(runtime / 60)}h ${runtime % 60}min` || ''
+      this.badgeInfo.released.text = Released.split(' ').reverse().join(' ') || ''
+      this.badgeInfo.score.text = `${imdbRating} / 10` || ''
     }
   }
 }
@@ -86,6 +123,7 @@ export default {
 main {
   display: flex;
   justify-content: center;
+  margin-top: 15px;
   font-size: 18px;
 }
 .main {
@@ -103,7 +141,7 @@ main {
     padding: 0 50px 0 0;
   }
   &__movie-img {
-    width: 400px;
+    width: 360px;
     border-radius: 20px;
   }
   &__movie-info {
@@ -111,8 +149,14 @@ main {
   }
 }
 .content {
+  &__badge-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
   &__title {
     width: 560px;
+    margin-top:110px;
     font-size: 80px;
     font-weight: bold;
     word-break: break-word;
@@ -153,6 +197,13 @@ main {
   &__content {
     position: absolute;
     top: 40px;
+    height: 100px;
+    overflow: scroll;
+    line-height: 1.6;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>

@@ -1,12 +1,15 @@
 <template>
   <div class="main__movie-list">
     <CommonTitle />
-    <div class="main__movie-items">
-      <ContentMovieItem
-        v-for="movieItem in movieList"
-        :key="`item-${movieItem.imdbItem}`"
-        :movie-item="movieItem" />
+    <div class="main__movie-items-wrapper">
+      <div class="main__movie-items">
+        <ContentMovieItem
+          v-for="movieItem in movieList"
+          :key="`item-${movieItem.imdbItem}`"
+          :movie-item="movieItem" />
+      </div>
     </div>
+
     <div class="main__movie-pagination">
     </div>
   </div>
@@ -44,16 +47,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main__movie-list {
+.main__movie-items-wrapper {
   display: flex;
-  flex-direction: column;
-  padding: 0 30px;
+  align-items: center;
+  justify-content: center;
 }
 .main__movie-items {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  text-align: center;
+  display: grid;
+  grid-template: repeat(5, 1fr) / repeat(5, 1fr);
+  grid-auto-flow: row dense;
+  justify-content: center;
 }
 .movie-pagination {
   padding: 0 10px;

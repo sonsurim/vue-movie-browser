@@ -11,7 +11,6 @@
       <h4 class="item-title">
         {{ movieItem.Title }}
       </h4>
-      <h6></h6>
     </div>
   </div>
 </template>
@@ -40,7 +39,8 @@ export default {
 
 <style lang="scss" scoped>
 .movie-list__item {
-  width: 235px;
+  width: 200px;
+  min-width: 200px;
   padding: 20px 10px;
 }
 .item {
@@ -53,7 +53,8 @@ export default {
     height: 300px;
     background-position: center top;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    border-radius: 12px;
   }
 }
 </style>

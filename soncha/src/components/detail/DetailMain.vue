@@ -1,48 +1,58 @@
 <template>
   <main>
-    <div class="main__container">
-      <div class="main__row">
-        <div class="main__movie-content">
-          <div class="content__badge-wrapper">
-            <CommonBadge
-              v-for="info in badgeInfo"
-              :key="`badge-${info.icon}`"
-              :info="info">
-              {{ info }}
-            </CommonBadge>
-          </div>
-          <h1
-            class="content__title"
-            :class="{ sm: title.length > 13 }">
-            {{ title }}
-          </h1>
-          <div class="content__info">
-            <div class="content__director">
-              {{ director }}
+    <div class="main__spinner">
+      <PacmanLoader
+        :loading="isLoading"
+        color="#FF3838" />
+    </div>
+
+    <div
+      v-show="!isLoading"
+      class="main__container">
+      <div class="main__wrapper">
+        <div class="main__row">
+          <div class="main__movie-content">
+            <div class="content__badge-wrapper">
+              <CommonBadge
+                v-for="info in badgeInfo"
+                :key="`badge-${info.icon}`"
+                :info="info">
+                {{ info }}
+              </CommonBadge>
             </div>
-            <div class="content__badges">
-              <span
-                v-for="genre in genreList"
-                :key="`item_${genre}`"
-                class="content__badge">
-                {{ genre }}
-              </span>
+            <h1
+              class="content__title"
+              :class="{ sm: title.length > 13 }">
+              {{ title }}
+            </h1>
+            <div class="content__info">
+              <div class="content__director">
+                {{ director }}
+              </div>
+              <div class="content__badges">
+                <span
+                  v-for="genre in genreList"
+                  :key="`item_${genre}`"
+                  class="content__badge">
+                  {{ genre }}
+                </span>
+              </div>
+              <hr class="content__division" />
             </div>
-            <hr class="content__division" />
           </div>
+          <img
+            class="main__movie-img"
+            :src="poster"
+            alt="" />
         </div>
-        <img
-          class="main__movie-img"
-          :src="poster"
-          alt="" />
-      </div>
-      <div class="main__row">
-        <div class="main__movie-info">
-          <div class="info__title">
-            <h2>Introduction</h2>
-          </div>
-          <div class="info__content">
-            {{ plot }}
+        <div class="main__row">
+          <div class="main__movie-info">
+            <div class="info__title">
+              <h2>Introduction</h2>
+            </div>
+            <div class="info__content">
+              {{ plot }}
+            </div>
           </div>
         </div>
       </div>
@@ -52,14 +62,17 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import PacmanLoader from 'vue-spinner/src/PacmanLoader'
 import CommonBadge from '@/components/common/CommonBadge'
 
 export default {
   components: {
+    PacmanLoader,
     CommonBadge
   },
   data () {
     return {
+      isLoading: true,
       title: '',
       poster: '',
       director: '',
@@ -97,6 +110,7 @@ export default {
     async init () {
       const id = this.$route.params.id
       await this.fetchMovieDetail(id)
+      this.isLoading = false
     },
     setData () {
       const { Title, Poster, Director, Plot, Genre, Runtime, Released, imdbRating } = this.currentMovie
@@ -127,8 +141,17 @@ main {
   font-size: 18px;
 }
 .main {
+  &__spinner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 140px);
+  }
   &__container {
+    display: flex;
+    align-items: center;
     width: 960px;
+    height: calc(100vh - 300px);
   }
   &__row:first-child {
     display: flex;

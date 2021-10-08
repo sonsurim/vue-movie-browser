@@ -9,7 +9,8 @@
     <img
       class="searchbar__icon"
       src="../../assets/icon-search.svg"
-      alt="" />
+      alt="search"
+      @click="searchMovie" />
   </div>
 </template>
 
@@ -50,6 +51,7 @@ export default {
   right: 125px;
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 </style>

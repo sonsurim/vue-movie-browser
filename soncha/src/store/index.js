@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
 import { getMovieList, getMovieDetail } from '@/api/movie'
-import router from '@/router'
 
 export default createStore({
   state: {

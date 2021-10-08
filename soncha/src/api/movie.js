@@ -2,7 +2,7 @@ import { instance } from '@/api/index'
 
 const apikey = process.env.VUE_APP_API_KEY
 
-function getMovieList (keyword, page) {
+function getMovieList (keyword = 'lion', page = 1) {
   return instance.get('', {
     params: {
       apikey,
@@ -12,7 +12,7 @@ function getMovieList (keyword, page) {
   })
 }
 
-function getMovieDetail (id, plot) {
+function getMovieDetail (id, plot = 'long') {
   return instance.get('', {
     params: {
       apikey,

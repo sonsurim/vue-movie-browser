@@ -1,7 +1,6 @@
 function convertResponse (res) {
   const response = {}
 
-  console.log(res)
   switch (res.Response) {
   case 'False':
     response.data = null
@@ -9,8 +8,8 @@ function convertResponse (res) {
     response.message = res.Error.message
     break
   default:
-    response.data = res.Search
-    response.total = res.totalResults
+    response.data = res.Search || res
+    response.total = res.totalResults || 0
   }
 
   return response

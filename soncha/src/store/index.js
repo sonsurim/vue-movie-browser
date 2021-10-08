@@ -1,16 +1,17 @@
 import { createStore } from 'vuex'
-import { getMovieList } from '@/api/movie'
+import { getMovieList, getMovieDetail } from '@/api/movie'
+import router from '@/router'
 
 export default createStore({
   state: {
-    currentMovie: '',
+    currentMovie: {},
     movieList: [],
     totalLength: 0,
     searchParams: {
       id: '',
-      page: '',
-      keyword: '',
-      plot: ''
+      page: 1,
+      keyword: 'lion',
+      plot: 'long'
     }
   },
   mutations: {
@@ -31,7 +32,7 @@ export default createStore({
   },
   actions: {
     async fetchMovieList ({ commit }, payload = {}) {
-      const { keyword = 'lion', page = 1 } = payload
+      const { keyword, page } = payload
       const res = await getMovieList(keyword, page)
 
       if (!res.data) {
@@ -41,6 +42,12 @@ export default createStore({
       commit('SET_MOVIELIST', res.data)
       commit('SET_TOTALLENGTH', res.total)
       commit('SET_SEARCHPARAMS', { keyword: keyword || 'lion', page: page || 1 })
+    },
+    async fetchMovieDetail ({ commit }, payload) {
+      const { data } = await getMovieDetail(payload)
+
+      commit('SET_SEARCHPARAMS', { id: payload })
+      commit('SET_CURRENTMOVIE', data)
     }
   }
 })

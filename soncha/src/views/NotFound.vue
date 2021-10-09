@@ -11,6 +11,9 @@ import HomeHeader from '@/components/home/HomeHeader'
 export default {
   components: {
     HomeHeader
+  },
+  created () {
+    this.emitter.emit('hide:spinner')
   }
 }
 </script>

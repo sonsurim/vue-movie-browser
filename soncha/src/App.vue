@@ -26,9 +26,11 @@ export default {
   created () {
     this.emitter.on('show:spinner', () => {
       this.isLoading = true
+      document.querySelector('body').setAttribute('style', 'overflow: hidden')
     })
     this.emitter.on('hide:spinner', () => {
       this.isLoading = false
+      document.querySelector('body').setAttribute('style', 'overflow: auto')
     })
   }
 }
@@ -52,7 +54,7 @@ body {
   left: 0;
   right: 0;
   width: 100vw;
-  height: 130vh;
+  height: 100vh;
   background: rgba(0, 0, 0, .7);
 }
 </style>

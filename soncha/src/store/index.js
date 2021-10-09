@@ -31,7 +31,7 @@ export default createStore({
     }
   },
   actions: {
-    async fetchMovieList ({ commit }, payload = {}) {
+    async fetchMovieList ({ state, commit }, payload = {}) {
       const { keyword, page } = payload
       const res = await getMovieList(keyword, page)
 
@@ -40,7 +40,12 @@ export default createStore({
         return
       }
 
-      commit('SET_MOVIELIST', res.data)
+      if (page > 1) {
+        commit('SET_MOVIELIST', [...state.movieList, ...res.data])
+      } else {
+        commit('SET_MOVIELIST', res.data)
+      }
+
       commit('SET_TOTALLENGTH', res.total)
       commit('SET_SEARCHPARAMS', { keyword: keyword || 'lion', page: page || 1 })
     },

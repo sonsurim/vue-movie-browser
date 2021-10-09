@@ -4,11 +4,11 @@
       v-model.trim="searchKeyword"
       type="text"
       class="searchbar__input"
-      placeholder="검색어를 입력하세요!"
+      placeholder="Search Movie..."
       @keyup.enter="searchMovie" />
     <img
       class="searchbar__icon"
-      src="../../assets/icon-search.svg"
+      src="../../assets/icon_search.svg"
       alt="search"
       @click="searchMovie" />
   </div>

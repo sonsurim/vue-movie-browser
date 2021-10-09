@@ -12,11 +12,14 @@
           :key="`item_${movieItem.imdbID}`"
           :movie-item="movieItem"
           @showDetail="showDetail" />
+        <div class="main__more">
+          <img
+            src="../../assets/icon_more.svg"
+            alt=""
+            @click="getMoreList" />
+        </div>
       </div>
     </div>
-    <!-- <div class="main__movie-pagination">
-      more
-    </div> -->
   </div>
 </template>
 
@@ -36,7 +39,7 @@ export default {
   computed: {
     ...mapState(['movieList', 'totalLength', 'searchParams']),
     searchResult () {
-      return `Search Results about "${this.$store.state.searchParams.keyword}"`
+      return `Search Results about "${this.searchParams.keyword}"`
     }
   },
   watch: {
@@ -72,12 +75,31 @@ export default {
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)
       this.$router.push(`/movie/${movieId}`)
+    },
+    async getMoreList () {
+      const keyword = this.searchParams.keyword
+      const page = Number(this.searchParams.page) + 1
+
+      await this.fetchMovieList({ keyword, page })
+      this.$router.replace(`?search=${keyword}&page=${page}`)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.main__more {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 440px;
+  margin-top: -35px;
+  margin-left: 40px;
+
+  img {
+    cursor: pointer;
+  }
+}
 .main__movie-list {
   display: flex;
   flex-direction: column;

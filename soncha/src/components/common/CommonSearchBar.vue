@@ -24,11 +24,14 @@ export default {
   methods: {
     async searchMovie () {
       const keyword = this.searchKeyword
-      this.emitter.emit('show:spinner')
 
       if (this.$route.name === 'NotFound') {
         this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
         return
+      }
+
+      if (keyword !== this.$route.query.search) {
+        this.emitter.emit('show:spinner')
       }
 
       this.$router.push(`?search=${keyword}&page=1`)
@@ -62,5 +65,4 @@ export default {
     cursor: pointer;
   }
 }
-
 </style>

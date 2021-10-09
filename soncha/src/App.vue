@@ -53,6 +53,6 @@ body {
   right: 0;
   width: 100vw;
   height: 130vh;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, .7);
 }
 </style>

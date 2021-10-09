@@ -34,10 +34,10 @@
               <hr class="content__division" />
             </div>
           </div>
-          <img
+          <div
             class="main__movie-img"
-            :src="poster"
-            alt="" />
+            :style="styleObject">
+          </div>
         </div>
         <div class="main__row">
           <div class="main__movie-info">
@@ -87,7 +87,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(['currentMovie'])
+    ...mapState(['currentMovie']),
+    styleObject () {
+      if (this.poster !== 'N/A') {
+        return { 'background-image': `url(${this.poster})` }
+      }
+
+      return { 'background-color': '#333' }
+    }
   },
   watch: {
     currentMovie () {
@@ -158,6 +165,10 @@ main {
   }
   &__movie-img {
     width: 360px;
+    min-height: 532px;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
     border-radius: 20px;
   }
   &__movie-info {

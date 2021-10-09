@@ -5,12 +5,15 @@
     @click="showDetail">
     <div
       class="item-img"
-      :style="`background-image: url(${movieItem.Poster}) `"
+      :style="styleObject"
       alt=""></div>
     <div class="item-info">
       <h4 class="item-title">
         {{ movieItem.Title }}
       </h4>
+      <p class="item-year">
+        {{ movieItem.Year }}
+      </p>
     </div>
   </div>
 </template>
@@ -24,6 +27,15 @@ export default {
     }
   },
   emits: ['showDetail'],
+  computed: {
+    styleObject () {
+      if (this.movieItem.Poster !== 'N/A') {
+        return { 'background-image': `url(${this.movieItem.Poster})` }
+      }
+
+      return { 'background-color': '#333' }
+    }
+  },
   methods: {
     showDetail () {
       const movieId = this.movieItem.imdbID
@@ -48,6 +60,12 @@ export default {
     font-size: 18px;
     font-weight: bold;
     padding: 0 10px;
+  }
+  &-year {
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 0 10px;
+    color: rgba(255, 255, 255, .5)
   }
   &-img {
     width: 100%;

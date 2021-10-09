@@ -2,6 +2,9 @@
   <div
     v-show="!isLoading"
     class="main__movie-list">
+    <h1 class="main__search-result">
+      {{ searchResult }}
+    </h1>
     <div class="main__movie-items-wrapper">
       <div class="main__movie-items">
         <ContentMovieItem
@@ -31,7 +34,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['movieList', 'totalLength', 'searchParams'])
+    ...mapState(['movieList', 'totalLength', 'searchParams']),
+    searchResult () {
+      return `Search Results about "${this.$store.state.searchParams.keyword}"`
+    }
   },
   watch: {
     async $route () {
@@ -41,6 +47,7 @@ export default {
 
       const keyword = this.$route.query.search
       const page = this.$route.query.page
+
       await this.fetchMovieList({ keyword, page })
       this.emitter.emit('hide:spinner')
       this.isLoading = false
@@ -71,6 +78,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.main__movie-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main__search-result {
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
+}
 .main__movie-items-wrapper {
   display: flex;
   align-items: center;

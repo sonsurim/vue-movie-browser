@@ -64,14 +64,17 @@ export default {
     ...mapMutations(['SET_CURRENTMOVIE']),
     ...mapActions(['fetchMovieList']),
     async init () {
-      const isNotInit = !!Object.keys(this.$route.query).length
-      const keyword = isNotInit ? this.$route.query.search : this.searchParams.keyword
-      const page = isNotInit ? this.$route.query.page : this.searchParams.page
+      const isInit = !!Object.keys(this.$route.query).length
+      const keyword = isInit ? this.$route.query.search : this.searchParams.keyword
+      const page = isInit ? this.$route.query.page : this.searchParams.page
 
-      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      if (!isInit) {
+        this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      }
+
       await this.fetchMovieList({ keyword, page })
-      this.emitter.emit('hide:spinner')
       this.isLoading = false
+      this.emitter.emit('hide:spinner')
     },
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)
@@ -86,8 +89,9 @@ export default {
       const keyword = this.searchParams.keyword
       const page = Number(this.searchParams.page) + 1
 
+      console.log(page)
       await this.fetchMovieList({ keyword, page })
-      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      this.$router.replace({ name: 'Home', query: { search: keyword, page } })
       this.isClicked = false
     }
   }

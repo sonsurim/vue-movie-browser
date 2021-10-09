@@ -1,11 +1,5 @@
 <template>
   <main>
-    <div class="main__spinner">
-      <PacmanLoader
-        :loading="isLoading"
-        color="#FF3838" />
-    </div>
-
     <div
       v-show="!isLoading"
       class="main__container">
@@ -62,12 +56,10 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import PacmanLoader from 'vue-spinner/src/PacmanLoader'
 import CommonBadge from '@/components/common/CommonBadge'
 
 export default {
   components: {
-    PacmanLoader,
     CommonBadge
   },
   data () {
@@ -110,6 +102,7 @@ export default {
     async init () {
       const id = this.$route.params.id
       await this.fetchMovieDetail(id)
+      this.emitter.emit('hide:spinner')
       this.isLoading = false
     },
     setData () {

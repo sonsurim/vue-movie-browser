@@ -1,5 +1,7 @@
 <template>
-  <div class="main__movie-list">
+  <div
+    v-show="!isLoading"
+    class="main__movie-list">
     <div class="main__movie-items-wrapper">
       <div class="main__movie-items">
         <ContentMovieItem
@@ -25,6 +27,7 @@ export default {
   },
   data () {
     return {
+      isLoading: true
     }
   },
   computed: {
@@ -38,8 +41,9 @@ export default {
 
       const keyword = this.$route.query.search
       const page = this.$route.query.page
-      console.log(this.$route, keyword, page)
       await this.fetchMovieList({ keyword, page })
+      this.emitter.emit('hide:spinner')
+      this.isLoading = false
     }
   },
   created () {
@@ -55,6 +59,8 @@ export default {
 
       this.$router.replace(`?search=${keyword}&page=${page}`)
       await this.fetchMovieList({ keyword, page })
+      this.emitter.emit('hide:spinner')
+      this.isLoading = false
     },
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)

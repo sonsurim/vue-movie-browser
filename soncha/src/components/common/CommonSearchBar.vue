@@ -24,6 +24,7 @@ export default {
   methods: {
     async searchMovie () {
       const keyword = this.searchKeyword
+      this.emitter.emit('show:spinner')
 
       if (this.$route.name === 'NotFound') {
         this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })

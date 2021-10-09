@@ -23,9 +23,11 @@ export default {
       default: () => ({})
     }
   },
+  emits: ['showDetail'],
   methods: {
     showDetail () {
       const movieId = this.movieItem.imdbID
+      this.emitter.emit('show:spinner')
       this.$emit('showDetail', movieId)
     }
   }

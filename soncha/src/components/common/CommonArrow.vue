@@ -3,8 +3,8 @@
     class="header__arrow"
     @click="test">
     <img
-      :src="require('@/assets/icon_arrow.svg')"
-      alt="" />
+      src="../../assets/icon_arrow.svg"
+      alt="arrow" />
   </div>
 </template>
 
@@ -27,5 +27,4 @@ export default {
   border-radius: 50%;
   background-color: rgba(255,255,255,.1);
 }
-
 </style>

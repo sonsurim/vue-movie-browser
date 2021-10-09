@@ -1,9 +1,9 @@
 <template>
   <div class="content__badge-header">
     <img
-      style="width: 24px; height: 24px;"
+      class="badge"
       :src="imgUrl"
-      alt="" />
+      alt="badge" />
     <span>{{ info.text }}</span>
   </div>
 </template>
@@ -14,11 +14,6 @@ export default {
     info: {
       type: Object,
       default: () => {}
-    }
-  },
-  data () {
-    return {
-      key: ''
     }
   },
   computed: {
@@ -43,6 +38,10 @@ export default {
     margin-top: 5px;
     margin-left: 10px;
   }
+}
+.badge {
+  width: 24px;
+  height: 24px;
 }
 
 </style>

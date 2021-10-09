@@ -21,5 +21,4 @@ export default {
   color: #FF3838;
   cursor: pointer;
 }
-
 </style>

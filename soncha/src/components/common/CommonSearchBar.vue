@@ -37,7 +37,6 @@ export default {
       this.$router.push(`?search=${keyword}&page=1`)
     }
   }
-
 }
 </script>
 

@@ -6,7 +6,7 @@
     <div
       class="item-img"
       :style="styleObject"
-      alt=""></div>
+      alt="poster"></div>
     <div class="item-info">
       <h4 class="item-title">
         {{ movieItem.Title }}
@@ -39,6 +39,7 @@ export default {
   methods: {
     showDetail () {
       const movieId = this.movieItem.imdbID
+
       this.emitter.emit('show:spinner')
       this.$emit('showDetail', movieId)
     }

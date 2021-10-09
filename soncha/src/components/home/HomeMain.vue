@@ -15,7 +15,7 @@
         <div class="main__more">
           <img
             src="../../assets/icon_more.svg"
-            alt=""
+            alt="more"
             @click="getMoreList" />
         </div>
       </div>
@@ -65,16 +65,30 @@ export default {
     ...mapActions(['fetchMovieList']),
     async init () {
       const isInit = !!Object.keys(this.$route.query).length
-      const keyword = isInit ? this.$route.query.search : this.searchParams.keyword
-      const page = isInit ? this.$route.query.page : this.searchParams.page
 
-      if (!isInit) {
-        this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      if (isInit) {
+        this.fetchListUseRoute()
+        return
       }
+
+      this.fetchListUseSearch()
+    },
+    async fetchListUseRoute () {
+      const keyword = this.$route.query.search
+      const page = this.$route.query.page
 
       await this.fetchMovieList({ keyword, page })
       this.isLoading = false
       this.emitter.emit('hide:spinner')
+    },
+    async fetchListUseSearch () {
+      const keyword = this.searchParams.keyword
+      const page = this.searchParams.page
+
+      await this.fetchMovieList({ keyword, page })
+      this.isLoading = false
+      this.emitter.emit('hide:spinner')
+      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
     },
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)
@@ -89,7 +103,6 @@ export default {
       const keyword = this.searchParams.keyword
       const page = Number(this.searchParams.page) + 1
 
-      console.log(page)
       await this.fetchMovieList({ keyword, page })
       this.$router.replace({ name: 'Home', query: { search: keyword, page } })
       this.isClicked = false
@@ -99,41 +112,40 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.main__more {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  height: 440px;
-  margin-top: -35px;
-  margin-left: 40px;
+.main {
+  &__more {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 440px;
+    margin-top: -35px;
+    margin-left: 40px;
 
-  img {
-    cursor: pointer;
+    img {
+      cursor: pointer;
+    }
   }
-}
-.main__movie-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.main__search-result {
-  margin-bottom: 20px;
-  font-size: 40px;
-  font-weight: bold;
-}
-.main__movie-items-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.main__movie-items {
-  display: grid;
-  grid-template: repeat(2, 1fr) / repeat(6, 1fr);
-  grid-gap: 20px;
-  grid-auto-flow: row dense;
-  justify-content: center;
-}
-.movie-pagination {
-  padding: 0 10px;
+  &__movie-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__search-result {
+    margin-bottom: 20px;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  &__movie-items-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__movie-items {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(6, 1fr);
+    grid-gap: 20px;
+    grid-auto-flow: row dense;
+    justify-content: center;
+  }
 }
 </style>

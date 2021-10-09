@@ -3,7 +3,7 @@
     class="header__arrow"
     @click="test">
     <img
-      src="../../assets/icon_arrow.svg"
+      :src="require('@/assets/icon_arrow.svg')"
       alt="" />
   </div>
 </template>

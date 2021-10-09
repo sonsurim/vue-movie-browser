@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import { getMovieList, getMovieDetail } from '@/api/movie'
 import router from '@/routes'
+import axios from 'axios'
 
 export default createStore({
   state: {
@@ -33,6 +34,7 @@ export default createStore({
   actions: {
     async fetchMovieList ({ state, commit }, payload = {}) {
       const { keyword, page } = payload
+
       const res = await getMovieList(keyword, page)
 
       if (!res.data) {

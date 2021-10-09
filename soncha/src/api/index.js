@@ -7,4 +7,4 @@ function create (url, options) {
   return instance
 }
 
-export const instance = create(process.env.VUE_APP_API_URL)
+export const instance = create('/.netlify/functions/movie')

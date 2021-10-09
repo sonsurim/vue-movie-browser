@@ -1,5 +1,8 @@
 module.exports = {
+  publicPath: '',
   devServer: {
-    overlay: false
+    port: 4999,
+    overlay: false,
+    historyApiFallback: true
   }
 }

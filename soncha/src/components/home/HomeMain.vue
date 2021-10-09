@@ -33,7 +33,8 @@ export default {
   },
   data () {
     return {
-      isLoading: true
+      isLoading: true,
+      isClicked: false
     }
   },
   computed: {
@@ -67,7 +68,7 @@ export default {
       const keyword = isNotInit ? this.$route.query.search : this.searchParams.keyword
       const page = isNotInit ? this.$route.query.page : this.searchParams.page
 
-      this.$router.replace(`?search=${keyword}&page=${page}`)
+      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
       await this.fetchMovieList({ keyword, page })
       this.emitter.emit('hide:spinner')
       this.isLoading = false
@@ -77,11 +78,17 @@ export default {
       this.$router.push(`/movie/${movieId}`)
     },
     async getMoreList () {
+      if (this.isClicked) {
+        return
+      }
+
+      this.isClicked = true
       const keyword = this.searchParams.keyword
       const page = Number(this.searchParams.page) + 1
 
       await this.fetchMovieList({ keyword, page })
-      this.$router.replace(`?search=${keyword}&page=${page}`)
+      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      this.isClicked = false
     }
   }
 }

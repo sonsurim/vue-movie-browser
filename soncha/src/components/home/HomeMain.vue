@@ -45,16 +45,11 @@ export default {
   },
   watch: {
     async $route () {
-      if (this.$route.name === 'Detail') {
+      if (this.$route.name === 'Detail' || this.$route.params.isMore) {
         return
       }
 
-      const keyword = this.$route.query.search
-      const page = this.$route.query.page
-
-      await this.fetchMovieList({ keyword, page })
-      this.emitter.emit('hide:spinner')
-      this.isLoading = false
+      this.fetchListUseRoute()
     }
   },
   created () {
@@ -88,7 +83,10 @@ export default {
       await this.fetchMovieList({ keyword, page })
       this.isLoading = false
       this.emitter.emit('hide:spinner')
-      this.$router.replace({ name: 'Home', query: { search: keyword, page: 1 } })
+      this.$router.replace({
+        name: 'Home',
+        query: { search: keyword, page: 1 }
+      })
     },
     showDetail (movieId) {
       this.SET_CURRENTMOVIE(movieId)
@@ -103,9 +101,14 @@ export default {
       const keyword = this.searchParams.keyword
       const page = Number(this.searchParams.page) + 1
 
-      await this.fetchMovieList({ keyword, page })
-      this.$router.replace({ name: 'Home', query: { search: keyword, page } })
+      await this.fetchMovieList({ keyword, page, isMore: true })
+
       this.isClicked = false
+      this.$router.replace({
+        name: 'Home',
+        query: { search: keyword, page },
+        params: { isMore: true }
+      })
     }
   }
 }

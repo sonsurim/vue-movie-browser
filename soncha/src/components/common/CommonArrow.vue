@@ -1,7 +1,7 @@
 <template>
   <div
     class="header__arrow"
-    @click="test">
+    @click="goBack">
     <img
       src="../../assets/icon_arrow.svg"
       alt="arrow" />
@@ -11,7 +11,7 @@
 <script>
 export default {
   methods: {
-    test () {
+    goBack () {
       this.$router.go(-1)
     }
   }
